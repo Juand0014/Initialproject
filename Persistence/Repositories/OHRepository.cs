@@ -5,11 +5,12 @@ using System.Text;
 using JsonGenerator.Application.Exceptions;
 using Microsoft.Data.SqlClient;
 using Domain.Interfaces;
+using Application.Features.StoreProcedureModule.Interface;
 
 
 namespace Persistence.Repositories;
 
-public class OHRepository : IOHInterfaceRepository
+public class OHRepository : IOHRepository
 {
     private readonly OHInterfaceContext context;
 
@@ -69,7 +70,7 @@ public class OHRepository : IOHInterfaceRepository
         return SP_Params;
     }
 
-    public IQueryable<TResult> GetStoredProcedureResult<TResult>(string storeProcedureName, params string[] parameters)
+    public IQueryable<TResult> GetStoredProcedureResult<TResult>(string storeProcedureName, params object[] parameters)
     {
         if (string.IsNullOrWhiteSpace(storeProcedureName))
             throw new NullOrEmptySPException();
